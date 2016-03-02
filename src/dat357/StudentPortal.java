@@ -15,8 +15,8 @@ import java.io.*;  // Reading user input.
 public class StudentPortal
 {
     /* TODO Here you should put your database name, username and password */
-    static final String USERNAME = "";
-    static final String PASSWORD = "";
+    static final String USERNAME = "tda357_052";
+    static final String PASSWORD = "erikemil";
 
     /* Print command usage.
      * /!\ you don't need to change this function! */
@@ -36,8 +36,8 @@ public class StudentPortal
             Class.forName("org.postgresql.Driver");
             String url = "jdbc:postgresql://ate.ita.chalmers.se/";
             Properties props = new Properties();
-            props.setProperty("tda357_052",USERNAME);
-            props.setProperty("erikemil",PASSWORD);
+            props.setProperty("user",USERNAME);
+            props.setProperty("password",PASSWORD);
             Connection conn = DriverManager.getConnection(url, props);
 
             String student = args[0]; // This is the identifier for the student.
@@ -82,6 +82,15 @@ public class StudentPortal
     static void getInformation(Connection conn, String student) throws SQLException
     {
         // TODO: Your implementation here
+    	
+    	Statement st = conn.createStatement();
+    	ResultSet rs = st.executeQuery("SELECT name FROM student WHERE natnbr = '" + student +"'") ;  
+    	
+		while (rs.next())
+		  System.out.println(rs.getString(1) + " " + rs.getString(2) ) ;
+		rs.close();
+		st.close();
+    	
     }
 
     /* Register: Given a student id number and a course code, this function
