@@ -69,6 +69,7 @@ public class StudentPortal
             System.exit(2);
         }
     }
+    
 
     /* Given a student identification number, ths function should print
      * - the name of the student, the students national identification number
@@ -82,6 +83,14 @@ public class StudentPortal
     static void getInformation(Connection conn, String student) throws SQLException
     {
         // TODO: Your implementation here
+    	
+    	Statement st = conn.createStatement();
+    	ResultSet rs = st.executeQuery("SELECT name FROM student WHERE natnbr = '" + student +"'") ;  
+    	
+		while (rs.next())
+		  System.out.println(rs.getString(1) + " " + rs.getString(2) ) ;
+		rs.close();
+		st.close();
     }
 
     /* Register: Given a student id number and a course code, this function
@@ -90,7 +99,13 @@ public class StudentPortal
     static void registerStudent(Connection conn, String student, String course)
     throws SQLException
     {
-        // TODO: Your implementation here
+    	Statement st = conn.createStatement();
+    	ResultSet rs = st.executeQuery("INSERT INTO Registrations values('"+course+"', '"+student+"')");  
+    	
+		while (rs.next())
+		  System.out.println(rs.getString(1) + " " + rs.getString(2) ) ;
+		rs.close();
+		st.close();
     }
 
     /* Unregister: Given a student id number and a course code, this function
